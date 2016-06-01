@@ -28,7 +28,8 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
             'required' => true
         ],
         'session'    => [
-            'required' => true
+            'required' => true,
+            'unique'   => true
         ],
         'cart'       => [
             'required' => true
