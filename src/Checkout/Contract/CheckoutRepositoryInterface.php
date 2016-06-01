@@ -1,6 +1,5 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout\Contract;
 
-use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\Streams\Platform\Entry\Contract\EntryRepositoryInterface;
 
 /**
@@ -15,11 +14,10 @@ interface CheckoutRepositoryInterface extends EntryRepositoryInterface
 {
 
     /**
-     * Find a checkout by session ID.
+     * Find a checkout by it's string ID.
      *
-     * @param               $session
-     * @param CartInterface $cart
+     * @param $id
      * @return CheckoutInterface|null
      */
-    public function findBySessionAndCart($session, CartInterface $cart);
+    public function findByStrId($id);
 }

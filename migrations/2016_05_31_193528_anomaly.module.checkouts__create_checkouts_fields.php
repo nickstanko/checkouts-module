@@ -18,7 +18,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsFields extends Migration
      * @var array
      */
     protected $fields = [
-        'session'    => 'anomaly.field_type.text',
+        'str_id'     => 'anomaly.field_type.text',
         'ip_address' => 'anomaly.field_type.text',
         'agent'      => 'anomaly.field_type.textarea',
         'checkout'   => [

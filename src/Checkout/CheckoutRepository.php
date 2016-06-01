@@ -1,6 +1,5 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout;
 
-use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
 use Anomaly\Streams\Platform\Entry\EntryRepository;
@@ -34,17 +33,13 @@ class CheckoutRepository extends EntryRepository implements CheckoutRepositoryIn
     }
 
     /**
-     * Find a checkout by session ID.
+     * Find a checkout by it's string ID.
      *
-     * @param               $session
-     * @param CartInterface $cart
+     * @param $id
      * @return CheckoutInterface|null
      */
-    public function findBySessionAndCart($session, CartInterface $cart)
+    public function findByStrId($id)
     {
-        return $this->model
-            ->where('session', $session)
-            ->where('cart_id', $cart->getId())
-            ->first();
+        return $this->model->where('str_id', $id)->first();
     }
 }

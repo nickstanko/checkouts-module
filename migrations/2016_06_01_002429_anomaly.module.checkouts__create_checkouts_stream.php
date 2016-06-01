@@ -21,15 +21,15 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
      * @var array
      */
     protected $assignments = [
+        'str_id'     => [
+            'required' => true,
+            'unique'   => true
+        ],
         'ip_address' => [
             'required' => true
         ],
         'state'      => [
             'required' => true
-        ],
-        'session'    => [
-            'required' => true,
-            'unique'   => true
         ],
         'cart'       => [
             'required' => true
