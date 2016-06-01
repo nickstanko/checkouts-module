@@ -11,7 +11,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
      * @var array
      */
     protected $stream = [
-        'slug'      => 'carts',
+        'slug'      => 'checkouts',
         'trashable' => true
     ];
 

@@ -2,35 +2,25 @@
 
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 
+/**
+ * Class CheckoutsModuleServiceProvider
+ *
+ * @link          http://pyrocms.com/
+ * @author        PyroCMS, Inc. <support@pyrocms.com>
+ * @author        Ryan Thompson <ryan@pyrocms.com>
+ * @package       Anomaly\CheckoutsModule
+ */
 class CheckoutsModuleServiceProvider extends AddonServiceProvider
 {
 
-    protected $plugins = [];
-
+    /**
+     * The addon routes.
+     *
+     * @var array
+     */
     protected $routes = [];
 
-    protected $middleware = [];
-
-    protected $listeners = [];
-
-    protected $aliases = [];
-
-    protected $bindings = [];
-
-    protected $providers = [];
-
-    protected $singletons = [];
-
-    protected $overrides = [];
-
-    protected $mobile = [];
-
-    public function register()
-    {
-    }
-
-    public function map()
-    {
-    }
-
+    protected $singletons = [
+        'Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface' => 'Anomaly\CheckoutsModule\Checkout\CheckoutRepository'
+    ];
 }

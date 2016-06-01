@@ -23,16 +23,14 @@ class CheckoutController extends PublicController
         CheckoutRepositoryInterface $checkouts,
         CartManager $carts,
         Store $session,
-        Agent $agent,
-        Guard $auth
+        Agent $agent
     ) {
         $cart = $carts->cart('cart');
 
-        if (!$checkout = $checkouts->findBySessionAndCart($session, $cart)) {
-            $checkout = $checkouts->create(
+        if (!$checkouts->findBySessionAndCart($session->getId(), $cart)) {
+            $checkouts->create(
                 [
-                    'user'       => $auth->user(),
-                    'mobile'     => $agent->isMobile(),
+                    'agent'      => serialize($agent->getHttpHeaders()),
                     'ip_address' => $this->request->ip(),
                     'state'      => 'shipping',
                     'session'    => $session->getId(),
@@ -42,11 +40,14 @@ class CheckoutController extends PublicController
                 ]
             );
         }
+
+        return $this->redirect->to('checkout/address');
     }
 
-    public
-    function address()
+    public function address(CartManager $carts, Store $session, CheckoutRepositoryInterface $checkouts)
     {
-        return $this->view->make('anomaly.module.checkouts::checkout');
+        $checkout = $checkouts->findBySessionAndCart($session->getId(), $carts->cart('cart'));
+
+        return $this->view->make('anomaly.module.checkouts::address', compact('checkout'));
     }
 }
