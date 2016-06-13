@@ -1,5 +1,5 @@
 {
-    "name": "anomaly/checkouts-module",
+    "name": "anomaly/checkout-module",
     "type": "streams-addon",
     "autoload": {
         "psr-4": {
