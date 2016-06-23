@@ -1,11 +1,13 @@
 <?php namespace Anomaly\CheckoutsModule\Http\Controller;
 
 use Anomaly\CartsModule\Cart\CartManager;
+use Anomaly\CartsModule\Cart\Command\GetCart;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
 use Anomaly\OrdersModule\Order\OrderModel;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Session\Store;
 use Jenssegers\Agent\Agent;
 
@@ -20,14 +22,13 @@ use Jenssegers\Agent\Agent;
 class CheckoutController extends PublicController
 {
 
-    public function start(
-        CheckoutRepositoryInterface $checkouts,
-        CartManager $carts,
-        Agent $agent
-    ) {
-        $cart = $carts->cart('cart');
+    use DispatchesJobs;
 
-        if (!$checkout = $checkouts->findByStrId($this->request->cookie('checkout'))) {
+    public function start(CheckoutRepositoryInterface $checkouts, Agent $agent, Store $session)
+    {
+        $cart = $this->dispatch(new GetCart());
+
+        if (!$checkout = $checkouts->findByStrId($session->get('checkout'))) {
 
             /* @var CheckoutInterface $checkout */
             $checkout = $checkouts->create(
@@ -41,15 +42,15 @@ class CheckoutController extends PublicController
                 ]
             );
 
-            $this->container->make('cookie')->queue('checkout', $checkout->getStrId());
+            $session->set('checkout', $checkout->getStrId());
         }
 
         return $this->redirect->to('checkout/address');
     }
 
-    public function address(CheckoutRepositoryInterface $checkouts)
+    public function address(CheckoutRepositoryInterface $checkouts, Store $session)
     {
-        $checkout = $checkouts->findByStrId($this->request->cookie('checkout'));
+        $checkout = $checkouts->findByStrId($session->get('checkout'));
 
         if ($input = $this->request->input()) {
 
@@ -61,9 +62,9 @@ class CheckoutController extends PublicController
         return $this->view->make('anomaly.module.checkouts::address', compact('checkout'));
     }
 
-    public function shipping(CheckoutRepositoryInterface $checkouts)
+    public function shipping(CheckoutRepositoryInterface $checkouts, Store $session)
     {
-        $checkout = $checkouts->findByStrId($this->request->cookie('checkout'));
+        $checkout = $checkouts->findByStrId($session->get('checkout'));
 
         if ($input = $this->request->input()) {
 
@@ -75,17 +76,24 @@ class CheckoutController extends PublicController
         return $this->view->make('anomaly.module.checkouts::shipping', compact('checkout'));
     }
 
-    public function billing(CheckoutRepositoryInterface $checkouts)
+    public function billing(CheckoutRepositoryInterface $checkouts, Store $session)
     {
-        $checkout = $checkouts->findByStrId($this->request->cookie('checkout'));
+        $checkout = $checkouts->findByStrId($session->get('checkout'));
 
         if ($input = $this->request->input()) {
 
-            $checkout->getOrder()->fill($input)->save();
+            //$checkout->getOrder()->fill($input)->save();
 
-            return $this->redirect->to('checkout/billing');
+            return $this->redirect->to('checkout/complete');
         }
 
         return $this->view->make('anomaly.module.checkouts::billing', compact('checkout'));
+    }
+
+    public function complete(CheckoutRepositoryInterface $checkouts, Store $session)
+    {
+        $checkout = $checkouts->findByStrId($session->get('checkout'));
+
+        return $this->view->make('anomaly.module.checkouts::complete', compact('checkout'));
     }
 }
