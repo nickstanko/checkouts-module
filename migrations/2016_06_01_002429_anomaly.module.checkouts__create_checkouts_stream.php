@@ -28,7 +28,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
         'ip_address' => [
             'required' => true
         ],
-        'state'      => [
+        'step'       => [
             'required' => true
         ],
         'cart'       => [
@@ -37,8 +37,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
         'order'      => [
             'required' => true
         ],
-        'customer',
-        'agent'
+        'user',
     ];
 
 }

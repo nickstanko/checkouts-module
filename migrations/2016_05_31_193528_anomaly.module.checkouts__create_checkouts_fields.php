@@ -20,7 +20,6 @@ class AnomalyModuleCheckoutsCreateCheckoutsFields extends Migration
     protected $fields = [
         'str_id'     => 'anomaly.field_type.text',
         'ip_address' => 'anomaly.field_type.text',
-        'agent'      => 'anomaly.field_type.textarea',
         'checkout'   => [
             'type'   => 'anomaly.field_type.addon',
             'config' => [
@@ -29,7 +28,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsFields extends Migration
                 'default_value' => 'anomaly.extension.standard_checkout'
             ]
         ],
-        'state'      => 'anomaly.field_type.text',
+        'step'       => 'anomaly.field_type.text',
         'cart'       => [
             'type'   => 'anomaly.field_type.relationship',
             'config' => [
@@ -42,10 +41,10 @@ class AnomalyModuleCheckoutsCreateCheckoutsFields extends Migration
                 'related' => 'Anomaly\OrdersModule\Order\OrderModel'
             ]
         ],
-        'customer'   => [
+        'user'       => [
             'type'   => 'anomaly.field_type.relationship',
             'config' => [
-                'related' => 'Anomaly\CustomersModule\Customer\CustomerModel'
+                'related' => 'Anomaly\UsersModule\User\UserModel'
             ]
         ],
     ];

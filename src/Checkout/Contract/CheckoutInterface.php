@@ -3,7 +3,6 @@
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Jenssegers\Agent\Facades\Agent;
 
 /**
  * Interface CheckoutInterface
@@ -17,6 +16,28 @@ interface CheckoutInterface extends EntryInterface
 {
 
     /**
+     * Get the steps.
+     *
+     * @return array
+     */
+    public function getSteps();
+
+    /**
+     * Return the first step.
+     *
+     * @return string
+     */
+    public function firstStep();
+
+    /**
+     * Return the next step.
+     *
+     * @param $step
+     * @return string
+     */
+    public function nextStep($step);
+
+    /**
      * Get the string ID.
      *
      * @return string
@@ -24,18 +45,18 @@ interface CheckoutInterface extends EntryInterface
     public function getStrId();
 
     /**
-     * Get the agent.
-     *
-     * @return Agent
-     */
-    public function getAgent();
-
-    /**
      * Get the related order.
      *
      * @return OrderInterface
      */
     public function getOrder();
+
+    /**
+     * Get the related order ID.
+     *
+     * @return int
+     */
+    public function getOrderId();
 
     /**
      * Return the cart relation.
@@ -52,9 +73,9 @@ interface CheckoutInterface extends EntryInterface
     public function order();
 
     /**
-     * Return the customer relation.
+     * Return the user relation.
      *
      * @return BelongsTo
      */
-    public function customer();
+    public function user();
 }

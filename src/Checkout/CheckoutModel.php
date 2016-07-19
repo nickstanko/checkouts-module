@@ -3,7 +3,6 @@
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Model\Checkouts\CheckoutsCheckoutsEntryModel;
-use Jenssegers\Agent\Agent;
 
 /**
  * Class CheckoutModel
@@ -17,6 +16,49 @@ class CheckoutModel extends CheckoutsCheckoutsEntryModel implements CheckoutInte
 {
 
     /**
+     * The checkout steps.
+     *
+     * @var array
+     */
+    protected $steps = [
+        'address',
+        'shipping',
+        'billing',
+        'complete',
+    ];
+
+    /**
+     * Get the steps.
+     *
+     * @return array
+     */
+    public function getSteps()
+    {
+        return $this->steps;
+    }
+
+    /**
+     * Return the first step.
+     *
+     * @return string
+     */
+    public function firstStep()
+    {
+        return $this->getSteps()[0];
+    }
+
+    /**
+     * Return the next step.
+     *
+     * @param $step
+     * @return string
+     */
+    public function nextStep($step)
+    {
+        return $this->steps[array_search($step, $this->steps) + 1];
+    }
+
+    /**
      * Get the string ID.
      *
      * @return string
@@ -27,16 +69,6 @@ class CheckoutModel extends CheckoutsCheckoutsEntryModel implements CheckoutInte
     }
 
     /**
-     * Get the agent.
-     *
-     * @return Agent
-     */
-    public function getAgent()
-    {
-        return new Agent($this->agent);
-    }
-
-    /**
      * Get the related order.
      *
      * @return OrderInterface
@@ -44,5 +76,15 @@ class CheckoutModel extends CheckoutsCheckoutsEntryModel implements CheckoutInte
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Get the related order ID.
+     *
+     * @return int
+     */
+    public function getOrderId()
+    {
+        return $this->order_id;
     }
 }

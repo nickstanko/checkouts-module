@@ -18,8 +18,18 @@ class CheckoutsModuleServiceProvider extends AddonServiceProvider
      *
      * @var array
      */
-    protected $routes = [];
+    protected $routes = [
+        'checkout'          => [
+            'as'   => 'anomaly.module.checkouts::checkouts.start',
+            'uses' => 'Anomaly\CheckoutsModule\Http\Controller\CheckoutController@start',
+        ],
+    ];
 
+    /**
+     * The addon singletons.
+     *
+     * @var array
+     */
     protected $singletons = [
         'Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface' => 'Anomaly\CheckoutsModule\Checkout\CheckoutRepository'
     ];
