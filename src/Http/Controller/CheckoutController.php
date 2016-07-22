@@ -4,6 +4,7 @@ use Anomaly\CartsModule\Cart\CartMigrator;
 use Anomaly\CartsModule\Cart\Command\GetCart;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
+use Anomaly\OrdersModule\Order\Contract\OrderRepositoryInterface;
 use Anomaly\OrdersModule\Order\OrderModel;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Illuminate\Contracts\Auth\Guard;
@@ -27,11 +28,12 @@ class CheckoutController extends PublicController
      * Start a new checkout process.
      *
      * @param CheckoutRepositoryInterface $checkouts
+     * @param OrderRepositoryInterface    $orders
      * @param CartMigrator                $migrator
      * @param Store                       $session
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function start(CheckoutRepositoryInterface $checkouts, CartMigrator $migrator, Store $session)
+    public function start(CheckoutRepositoryInterface $checkouts, OrderRepositoryInterface $orders, CartMigrator $migrator, Store $session)
     {
         $cart = $this->dispatch(new GetCart());
 
@@ -42,13 +44,9 @@ class CheckoutController extends PublicController
                 [
                     'ip_address' => $this->request->ip(),
                     'cart'       => $cart,
-                    'order'      => (
-                    new OrderModel(
-                        [
-                            'status' => 'pending'
-                        ]
-                    )
-                    )->save()
+                    'order'      => $orders->create([
+                        'status' => 'pending'
+                    ])
                 ]
             );
 
