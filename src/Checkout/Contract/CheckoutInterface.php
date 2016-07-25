@@ -1,5 +1,6 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout\Contract;
 
+use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,33 +17,18 @@ interface CheckoutInterface extends EntryInterface
 {
 
     /**
-     * Get the steps.
-     *
-     * @return array
-     */
-    public function getSteps();
-
-    /**
-     * Return the first step.
-     *
-     * @return string
-     */
-    public function firstStep();
-
-    /**
-     * Return the next step.
-     *
-     * @param $step
-     * @return string
-     */
-    public function nextStep($step);
-
-    /**
      * Get the string ID.
      *
      * @return string
      */
     public function getStrId();
+
+    /**
+     * Get the related cart.
+     *
+     * @return CartInterface|null
+     */
+    public function getCart();
 
     /**
      * Get the related order.

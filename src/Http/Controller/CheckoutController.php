@@ -2,6 +2,7 @@
 
 use Anomaly\CartsModule\Cart\CartMigrator;
 use Anomaly\CartsModule\Cart\Command\GetCart;
+use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderRepositoryInterface;
@@ -35,7 +36,12 @@ class CheckoutController extends PublicController
      */
     public function start(CheckoutRepositoryInterface $checkouts, OrderRepositoryInterface $orders, CartMigrator $migrator, Store $session)
     {
+        /* @var CartInterface $cart */
         $cart = $this->dispatch(new GetCart());
+
+        if ($cart->getItems()->isEmpty()) {
+            return $this->redirect->route('anomaly.module.carts::carts.view');
+        }
 
         if (!$checkout = $checkouts->findByStrId($session->get('checkout'))) {
 
@@ -56,10 +62,5 @@ class CheckoutController extends PublicController
         }
 
         return $this->redirect->to('checkout/address');
-    }
-
-    public function address()
-    {
-
     }
 }

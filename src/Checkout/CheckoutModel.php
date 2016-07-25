@@ -1,5 +1,6 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout;
 
+use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Model\Checkouts\CheckoutsCheckoutsEntryModel;
@@ -16,49 +17,6 @@ class CheckoutModel extends CheckoutsCheckoutsEntryModel implements CheckoutInte
 {
 
     /**
-     * The checkout steps.
-     *
-     * @var array
-     */
-    protected $steps = [
-        'address',
-        'shipping',
-        'billing',
-        'complete',
-    ];
-
-    /**
-     * Get the steps.
-     *
-     * @return array
-     */
-    public function getSteps()
-    {
-        return $this->steps;
-    }
-
-    /**
-     * Return the first step.
-     *
-     * @return string
-     */
-    public function firstStep()
-    {
-        return $this->getSteps()[0];
-    }
-
-    /**
-     * Return the next step.
-     *
-     * @param $step
-     * @return string
-     */
-    public function nextStep($step)
-    {
-        return $this->steps[array_search($step, $this->steps) + 1];
-    }
-
-    /**
      * Get the string ID.
      *
      * @return string
@@ -66,6 +24,16 @@ class CheckoutModel extends CheckoutsCheckoutsEntryModel implements CheckoutInte
     public function getStrId()
     {
         return $this->str_id;
+    }
+
+    /**
+     * Get the related cart.
+     *
+     * @return CartInterface|null
+     */
+    public function getCart()
+    {
+        return $this->cart;
     }
 
     /**
