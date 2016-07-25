@@ -4,6 +4,14 @@ use Anomaly\CheckoutsModule\Checkout\Form\CheckoutFormBuilder;
 use Anomaly\CheckoutsModule\Checkout\Table\CheckoutTableBuilder;
 use Anomaly\Streams\Platform\Http\Controller\AdminController;
 
+/**
+ * Class CheckoutsController
+ *
+ * @link          http://pyrocms.com/
+ * @author        PyroCMS, Inc. <support@pyrocms.com>
+ * @author        Ryan Thompson <ryan@pyrocms.com>
+ * @package       Anomaly\CheckoutsModule\Http\Controller\Admin
+ */
 class CheckoutsController extends AdminController
 {
 
