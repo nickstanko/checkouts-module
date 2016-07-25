@@ -6,7 +6,6 @@ use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderRepositoryInterface;
-use Anomaly\OrdersModule\Order\OrderModel;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -34,8 +33,12 @@ class CheckoutController extends PublicController
      * @param Store                       $session
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function start(CheckoutRepositoryInterface $checkouts, OrderRepositoryInterface $orders, CartMigrator $migrator, Store $session)
-    {
+    public function start(
+        CheckoutRepositoryInterface $checkouts,
+        OrderRepositoryInterface $orders,
+        CartMigrator $migrator,
+        Store $session
+    ) {
         /* @var CartInterface $cart */
         $cart = $this->dispatch(new GetCart());
 
@@ -50,13 +53,27 @@ class CheckoutController extends PublicController
                 [
                     'ip_address' => $this->request->ip(),
                     'cart'       => $cart,
-                    'order'      => $orders->create([
-                        'status' => 'pending'
-                    ])
+                    'order'      => $orders->create(
+                        [
+                            'status' => 'pending'
+                        ]
+                    )
                 ]
             );
 
             $session->set('checkout', $checkout->getStrId());
+
+            $migrator->migrate($checkout);
+        }
+
+        if (!$checkout->getOrder()) {
+            $checkout->order()->associate(
+                $orders->create(
+                    [
+                        'status' => 'pending'
+                    ]
+                )
+            );
 
             $migrator->migrate($checkout);
         }
