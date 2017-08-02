@@ -2,6 +2,7 @@
 
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
+use Anomaly\OrdersModule\Order\OrderModel;
 use Anomaly\StoreModule\Contract\CartInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Contracts\Auth\Guard;
@@ -82,6 +83,7 @@ class CheckoutManager
                     'cart'       => $cart->instance(),
                     'user'       => $this->auth->user(),
                     'ip_address' => $this->request->ip(),
+                    'order'      => (new OrderModel())->create([]),
                 ]
             );
         }
