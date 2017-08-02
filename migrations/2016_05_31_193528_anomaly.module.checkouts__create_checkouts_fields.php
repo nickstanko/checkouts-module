@@ -1,6 +1,7 @@
 <?php
 
 use Anomaly\Streams\Platform\Database\Migration\Migration;
+use Anomaly\UsersModule\User\UserModel;
 
 /**
  * Class AnomalyModuleCheckoutsCreateCheckoutsFields
@@ -25,27 +26,17 @@ class AnomalyModuleCheckoutsCreateCheckoutsFields extends Migration
             'config' => [
                 'type'          => 'extension',
                 'search'        => 'anomaly.module.checkouts::checkout.*',
-                'default_value' => 'anomaly.extension.standard_checkout'
-            ]
+                'default_value' => 'anomaly.extension.standard_checkout',
+            ],
         ],
         'step'       => 'anomaly.field_type.text',
-        'cart'       => [
-            'type'   => 'anomaly.field_type.relationship',
-            'config' => [
-                'related' => 'Anomaly\CartsModule\Cart\CartModel'
-            ]
-        ],
-        'order'      => [
-            'type'   => 'anomaly.field_type.relationship',
-            'config' => [
-                'related' => 'Anomaly\OrdersModule\Order\OrderModel'
-            ]
-        ],
+        'cart'       => 'anomaly.field_type.polymorphic',
+        'order'      => 'anomaly.field_type.polymorphic',
         'user'       => [
             'type'   => 'anomaly.field_type.relationship',
             'config' => [
-                'related' => 'Anomaly\UsersModule\User\UserModel'
-            ]
+                'related' => UserModel::class,
+            ],
         ],
     ];
 
