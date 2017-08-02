@@ -1,6 +1,10 @@
 <?php namespace Anomaly\CheckoutsModule;
 
+use Anomaly\CheckoutsModule\Checkout\CheckoutModel;
+use Anomaly\CheckoutsModule\Checkout\CheckoutRepository;
+use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
+use Anomaly\Streams\Platform\Model\Checkouts\CheckoutsCheckoutsEntryModel;
 
 /**
  * Class CheckoutsModuleServiceProvider
@@ -14,15 +18,12 @@ class CheckoutsModuleServiceProvider extends AddonServiceProvider
 {
 
     /**
-     * The addon routes.
+     * The addon bindings.
      *
      * @var array
      */
-    protected $routes = [
-        'checkout'          => [
-            'as'   => 'anomaly.module.checkouts::checkouts.start',
-            'uses' => 'Anomaly\CheckoutsModule\Http\Controller\CheckoutController@start',
-        ],
+    protected $bindings = [
+        CheckoutsCheckoutsEntryModel::class => CheckoutModel::class,
     ];
 
     /**
@@ -31,6 +32,18 @@ class CheckoutsModuleServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $singletons = [
-        'Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface' => 'Anomaly\CheckoutsModule\Checkout\CheckoutRepository'
+        CheckoutRepositoryInterface::class => CheckoutRepository::class,
+    ];
+
+    /**
+     * The addon routes.
+     *
+     * @var array
+     */
+    protected $routes = [
+        'checkout' => [
+            'as'   => 'anomaly.module.checkouts::checkouts.start',
+            'uses' => 'Anomaly\CheckoutsModule\Http\Controller\CheckoutController@start',
+        ],
     ];
 }

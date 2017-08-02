@@ -1,6 +1,9 @@
 {
     "name": "anomaly/checkouts-module",
     "type": "streams-addon",
+    "require": {
+        "anomaly/store-module": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Anomaly\\CheckoutsModule\\": "src/"
