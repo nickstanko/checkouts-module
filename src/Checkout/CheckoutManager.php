@@ -4,6 +4,7 @@ use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
 use Anomaly\OrdersModule\Order\OrderModel;
 use Anomaly\StoreModule\Contract\CartInterface;
+use Anomaly\StoreModule\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
@@ -91,6 +92,22 @@ class CheckoutManager
         $this->persistence->persist($checkout->getStrId());
 
         return $checkout;
+    }
+
+    /**
+     * Return the checkout order.
+     *
+     * @return OrderInterface
+     * @throws \Exception
+     */
+    public function order()
+    {
+        /* @var CheckoutInterface $checkout */
+        if (!$checkout = $this->checkouts->findByStrId($this->persistence->id())) {
+            throw new \Exception("No checkout found.");
+        }
+
+        return $checkout->getOrder();
     }
 
     /**

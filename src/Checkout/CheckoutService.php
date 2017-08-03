@@ -1,6 +1,7 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout;
 
 use Anomaly\StoreModule\Contract\CheckoutInterface;
+use Anomaly\StoreModule\Contract\OrderInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
@@ -15,4 +16,30 @@ class CheckoutService implements CheckoutInterface
 
     use DispatchesJobs;
 
+    /**
+     * The checkout manager.
+     *
+     * @var CheckoutManager
+     */
+    protected $manager;
+
+    /**
+     * Create a new CheckoutService instance.
+     *
+     * @param CheckoutManager $manager
+     */
+    public function __construct(CheckoutManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
+    /**
+     * Return the order instance.
+     *
+     * @return OrderInterface
+     */
+    public function order()
+    {
+        return $this->manager->order();
+    }
 }

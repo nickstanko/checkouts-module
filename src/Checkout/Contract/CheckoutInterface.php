@@ -1,7 +1,7 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout\Contract;
 
 use Anomaly\CartsModule\Cart\Contract\CartInterface;
-use Anomaly\OrdersModule\Order\Contract\OrderInterface;
+use Anomaly\StoreModule\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

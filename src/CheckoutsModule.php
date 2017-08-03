@@ -2,23 +2,21 @@
 
 use Anomaly\Streams\Platform\Addon\Module\Module;
 
+/**
+ * Class CheckoutsModule
+ *
+ * @link   http://pyrocms.com/
+ * @author PyroCMS, Inc. <support@pyrocms.com>
+ * @author Ryan Thompson <ryan@pyrocms.com>
+ */
 class CheckoutsModule extends Module
 {
 
     /**
-     * The navigation icon.
+     * Not displayed in navigation.
      *
-     * @var string
+     * @var bool
      */
-    protected $icon = 'addon';
-
-    /**
-     * The module sections.
-     *
-     * @var array
-     */
-    protected $sections = [
-        'example'
-    ];
+    protected $navigation = false;
 
 }
