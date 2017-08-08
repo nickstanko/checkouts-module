@@ -31,7 +31,6 @@ class AnomalyModuleCheckoutsCreateCheckoutsFields extends Migration
         ],
         'step'       => 'anomaly.field_type.text',
         'cart'       => 'anomaly.field_type.polymorphic',
-        'order'      => 'anomaly.field_type.polymorphic',
         'user'       => [
             'type'   => 'anomaly.field_type.relationship',
             'config' => [

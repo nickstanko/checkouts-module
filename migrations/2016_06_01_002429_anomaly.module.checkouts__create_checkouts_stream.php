@@ -12,7 +12,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
      */
     protected $stream = [
         'slug'      => 'checkouts',
-        'trashable' => true
+        'trashable' => true,
     ];
 
     /**
@@ -23,19 +23,16 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
     protected $assignments = [
         'str_id'     => [
             'required' => true,
-            'unique'   => true
+            'unique'   => true,
         ],
         'ip_address' => [
-            'required' => true
+            'required' => true,
         ],
         'step'       => [
-            'required' => true
+            'required' => true,
         ],
         'cart'       => [
-            'required' => true
-        ],
-        'order'      => [
-            'required' => true
+            'required' => true,
         ],
         'user',
     ];
