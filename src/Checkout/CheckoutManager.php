@@ -93,19 +93,19 @@ class CheckoutManager
     }
 
     /**
-     * Return the checkout order.
+     * Return the checkout cart.
      *
-     * @return OrderInterface
+     * @return CartInterface
      * @throws \Exception
      */
-    public function order()
+    public function cart()
     {
         /* @var CheckoutInterface $checkout */
         if (!$checkout = $this->checkouts->findByStrId($this->persistence->id())) {
             throw new \Exception("No checkout found.");
         }
 
-        return $checkout->getOrder();
+        return $checkout->getCart();
     }
 
     /**

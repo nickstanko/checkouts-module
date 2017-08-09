@@ -1,5 +1,6 @@
 <?php namespace Anomaly\CheckoutsModule\Checkout;
 
+use Anomaly\StoreModule\Contract\CartInterface;
 use Anomaly\StoreModule\Contract\CheckoutInterface;
 use Anomaly\StoreModule\Contract\OrderInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -36,10 +37,10 @@ class CheckoutService implements CheckoutInterface
     /**
      * Return the order instance.
      *
-     * @return OrderInterface
+     * @return CartInterface
      */
-    public function order()
+    public function cart()
     {
-        return $this->manager->order();
+        return $this->manager->cart();
     }
 }
