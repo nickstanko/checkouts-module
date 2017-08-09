@@ -34,6 +34,7 @@ class AnomalyModuleCheckoutsCreateCheckoutsStream extends Migration
         'cart'       => [
             'required' => true,
         ],
+        'order',
         'user',
     ];
 
