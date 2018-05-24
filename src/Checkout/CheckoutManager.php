@@ -80,7 +80,7 @@ class CheckoutManager
         if (!$checkout = $this->checkouts->findByStrId($this->persistence->id())) {
             $checkout = $this->checkouts->create(
                 [
-                    'cart'       => $cart->instance(),
+                    'cart'       => $cart->getInstance(),
                     'user'       => $this->auth->user(),
                     'ip_address' => $this->request->ip(),
                 ]
