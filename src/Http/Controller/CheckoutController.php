@@ -1,6 +1,7 @@
 <?php namespace Anomaly\CheckoutsModule\Http\Controller;
 
 use Anomaly\CheckoutsModule\Checkout\CheckoutManager;
+use Anomaly\CartsModule\Cart\CartManager;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Session\Store;
@@ -25,11 +26,11 @@ class CheckoutController extends PublicController
      * @param ServiceManager $services
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function start(CheckoutManager $manager, Store $session)
+    public function start(CheckoutManager $manager, CartManager $carts, Store $session)
     {
-
         /* @var CartInterface $cart */
-        $cart = $session->get('cart');
+        $instance = $session->get('cart');
+        $cart = $carts->cart($instance);
 
         if (!$cart->count()) {
             return $this->redirect->route('store::cart');
