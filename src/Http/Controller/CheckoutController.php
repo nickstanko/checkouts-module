@@ -29,7 +29,7 @@ class CheckoutController extends PublicController
     {
 
         /* @var CartInterface $cart */
-        $cart = $this->dispatch(new GetCart($instance));
+        $cart = $this->dispatch(new GetCart());
 
         if (!$cart->count()) {
             return $this->redirect->route('store::cart');
