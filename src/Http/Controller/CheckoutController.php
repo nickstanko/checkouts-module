@@ -31,7 +31,7 @@ class CheckoutController extends PublicController
     {
         /* @var CartInterface $cart */
         $instance = $session->get('cart');
-        $cart = $carts->cart($instance);
+        $cart = $carts->findByStrId($instance);
 
         if (!$cart->count()) {
             return $this->redirect->route('store::cart');
