@@ -2,7 +2,7 @@
 
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutInterface;
 use Anomaly\CheckoutsModule\Checkout\Contract\CheckoutRepositoryInterface;
-use Anomaly\StoreModule\Contract\CartInterface;
+use Anomaly\CartsModule\Cart\CartModel;
 use Anomaly\StoreModule\Contract\OrderInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Contracts\Auth\Guard;
@@ -73,7 +73,7 @@ class CheckoutManager
      * @param CartInterface $cart
      * @return CheckoutInterface
      */
-    public function checkout(CartInterface $cart)
+    public function checkout(CartModel $cart)
     {
 
         /* @var CheckoutInterface $checkout */
